@@ -5,7 +5,7 @@ namespace Nethereum.Contracts.Comparers
 {
     public class FilterLogBlockNumberTransactionIndexComparer : IComparer<FilterLog>
     {
-        //TODO: Move to Nethereum RPC
+        //Move to Nethereum RPC
         public int Compare(FilterLog x, FilterLog y)
         {
             if (x.BlockNumber.Value == y.BlockNumber.Value)

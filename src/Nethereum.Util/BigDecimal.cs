@@ -335,7 +335,7 @@ namespace Nethereum.Util
 
         public static BigDecimal Parse(string value)
         {
-            //todo culture format
+            //do culture format
             var decimalCharacter = ".";
             var indexOfDecimal = value.IndexOf(".");
             var exponent = 0;
