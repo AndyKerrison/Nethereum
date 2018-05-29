@@ -26,9 +26,9 @@ namespace Nethereum.Signer
         }
 
         public Transaction(byte[] nonce, byte[] gasPrice, byte[] gasLimit, byte[] receiveAddress, byte[] value,
-            byte[] data)
+            byte[] data, bool isWanchain = false)
         {
-            SimpleRlpSigner = new RLPSigner(GetElementsInOrder(nonce, gasPrice, gasLimit, receiveAddress, value, data));
+            SimpleRlpSigner = new RLPSigner(GetElementsInOrder(nonce, gasPrice, gasLimit, receiveAddress, value, data, isWanchain));
         }
 
         public Transaction(byte[] nonce, byte[] gasPrice, byte[] gasLimit, byte[] receiveAddress, byte[] value,
@@ -48,14 +48,14 @@ namespace Nethereum.Signer
         {
         }
 
-        public Transaction(string to, BigInteger amount, BigInteger nonce, BigInteger gasPrice, BigInteger gasLimit)
-            : this(to, amount, nonce, gasPrice, gasLimit, "")
+        public Transaction(string to, BigInteger amount, BigInteger nonce, BigInteger gasPrice, BigInteger gasLimit, bool isWanchain = false)
+            : this(to, amount, nonce, gasPrice, gasLimit, "", isWanchain)
         {
         }
 
         public Transaction(string to, BigInteger amount, BigInteger nonce, BigInteger gasPrice,
-            BigInteger gasLimit, string data) : this(nonce.ToBytesForRLPEncoding(), gasPrice.ToBytesForRLPEncoding(),
-            gasLimit.ToBytesForRLPEncoding(), to.HexToByteArray(), amount.ToBytesForRLPEncoding(), data.HexToByteArray()
+            BigInteger gasLimit, string data, bool isWanchain = false) : this(nonce.ToBytesForRLPEncoding(), gasPrice.ToBytesForRLPEncoding(),
+            gasLimit.ToBytesForRLPEncoding(), to.HexToByteArray(), amount.ToBytesForRLPEncoding(), data.HexToByteArray(), isWanchain
         )
         {
         }
@@ -72,12 +72,16 @@ namespace Nethereum.Signer
 
         private byte[][] GetElementsInOrder(byte[] nonce, byte[] gasPrice, byte[] gasLimit, byte[] receiveAddress,
             byte[] value,
-            byte[] data)
+            byte[] data, bool isWanchain = false)
         {
             if (receiveAddress == null)
                 receiveAddress = EMPTY_BYTE_ARRAY;
             //order  nonce, gasPrice, gasLimit, receiveAddress, value, data
-            return new[] {nonce, gasPrice, gasLimit, receiveAddress, value, data};
+            var txType = new BigInteger(1).ToBytesForRLPEncoding();
+            if (!isWanchain)
+                return new[] { /*txType,*/ nonce, gasPrice, gasLimit, receiveAddress, value, data};
+            else
+                return new[] { txType, nonce, gasPrice, gasLimit, receiveAddress, value, data };
         }
 
         public override EthECKey Key => EthECKey.RecoverFromSignature(SimpleRlpSigner.Signature, SimpleRlpSigner.RawHash);

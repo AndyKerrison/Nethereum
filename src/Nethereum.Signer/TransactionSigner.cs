@@ -94,9 +94,9 @@ namespace Nethereum.Signer
 
         public string SignTransaction(byte[] privateKey, string to, BigInteger amount, BigInteger nonce,
             BigInteger gasPrice,
-            BigInteger gasLimit)
+            BigInteger gasLimit, bool isWanchain = false)
         {
-            var transaction = new Transaction(to, amount, nonce, gasPrice, gasLimit);
+            var transaction = new Transaction(to, amount, nonce, gasPrice, gasLimit, isWanchain);
             return SignTransaction(privateKey, transaction);
         }
 
