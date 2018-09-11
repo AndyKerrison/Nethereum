@@ -12,7 +12,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Nethereum.ABI\Nethereum.ABI.csproj" />
     <ProjectReference Include="..\Nethereum.Hex\Nethereum.Hex.csproj" />
     <ProjectReference Include="..\Nethereum.RPC\Nethereum.RPC.csproj" />
   </ItemGroup>

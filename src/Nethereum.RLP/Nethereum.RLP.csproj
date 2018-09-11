@@ -18,8 +18,4 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Nethereum.Hex\Nethereum.Hex.csproj" />
-  </ItemGroup>
-
 </Project>
