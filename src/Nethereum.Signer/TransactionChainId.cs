@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Numerics;
+using System.Threading.Tasks;
 using Nethereum.Hex.HexConvertors.Extensions;
 using Nethereum.RLP;
 
@@ -104,12 +105,15 @@ namespace Nethereum.Signer
             return ChainId.ToBigIntegerFromRLPDecoded();
         }
 
-        public byte[] ChainId => SimpleRlpSigner.Data[6];
+        public byte[] ChainId => SimpleRlpSigner.Data[7];
 
-        public byte[] RHash => SimpleRlpSigner.Data[7];
+        public byte[] RHash => SimpleRlpSigner.Data[8];
 
-        public byte[] SHash => SimpleRlpSigner.Data[8];
+        public byte[] SHash => SimpleRlpSigner.Data[9];
 
+        /// <summary>
+        /// Recovered Key from Signature
+        /// </summary>
         public override EthECKey Key => EthECKey.RecoverFromSignature(SimpleRlpSigner.Signature,
             SimpleRlpSigner.RawHash,
             ChainId.ToBigIntegerFromRLPDecoded());
@@ -129,6 +133,13 @@ namespace Nethereum.Signer
             SimpleRlpSigner.Sign(key, GetChainIdAsBigInteger());
         }
 
+#if !DOTNET35
+        public override async Task SignExternallyAsync(IEthECKeyExternalSigner externalSigner)
+        {
+            await SimpleRlpSigner.SignExternallyAsync(externalSigner, GetChainIdAsBigInteger()).ConfigureAwait(false);
+        }
+#endif
+
         private byte[][] GetElementsInOrder(byte[] nonce, byte[] gasPrice, byte[] gasLimit, byte[] receiveAddress,
             byte[] value,
             byte[] data, byte[] chainId)
@@ -138,9 +149,12 @@ namespace Nethereum.Signer
             //order  nonce, gasPrice, gasLimit, receiveAddress, value, data, chainId, r = 0, s =0
             return new[]
             {
+                new BigInteger(1).ToByteArray(),
                 nonce, gasPrice, gasLimit, receiveAddress, value, data, chainId, RHASH_DEFAULT,
                 SHASH_DEFAULT
             };
         }
+
     }
+
 }

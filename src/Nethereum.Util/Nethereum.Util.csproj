@@ -13,6 +13,11 @@
     <PackageLicenseUrl>https://raw.githubusercontent.com/Nethereum/Nethereum/master/LICENSE.md</PackageLicenseUrl>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Nethereum.Hex\Nethereum.Hex.csproj" />
+    <ProjectReference Include="..\Nethereum.RLP\Nethereum.RLP.csproj" />
+  </ItemGroup>
+   
   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.1'">
     <PackageReference Include="Portable.BouncyCastle" Version="1.8.2" />
   </ItemGroup>

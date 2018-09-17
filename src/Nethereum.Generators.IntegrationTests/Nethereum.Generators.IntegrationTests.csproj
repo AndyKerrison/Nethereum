@@ -1,11 +1,10 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Nethereum.Generator.Console\Nethereum.Generator.Console.csproj" />
     <ProjectReference Include="..\Nethereum.Generators.Net\Nethereum.Generators.Net.csproj" />
     <ProjectReference Include="..\Nethereum.Generators.Tests.Common\Nethereum.Generators.Tests.Common.csproj" />
     <ProjectReference Include="..\Nethereum.Generators\Nethereum.Generators.csproj" />

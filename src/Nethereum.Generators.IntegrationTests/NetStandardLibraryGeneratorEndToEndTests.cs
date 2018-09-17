@@ -17,12 +17,20 @@ namespace Nethereum.Generators.IntegrationTests
         public void GeneratedProjectBuildsSuccessfully(CodeGenLanguage codeGenLanguage)
         {
             var context = new ProjectTestContext(GetType().Name,
-                $"{MethodBase.GetCurrentMethod().Name}.{codeGenLanguage}");
+                $"{MethodBase.GetCurrentMethod().Name}{codeGenLanguage}");
 
             try
             {
                 //given
-                var generator = new NetStandardLibraryGenerator(context.ProjectFilePath, codeGenLanguage);
+                context.TargetFramework = "netstandard2.0";
+                context.CreateEmptyProject();
+                var fullProjectFilePath = Path.Combine(context.TargetProjectFolder,
+                    context.ProjectName + CodeGenLanguageExt.ProjectFileExtensions[codeGenLanguage]);
+
+                var generator = new NetStandardLibraryGenerator(fullProjectFilePath, codeGenLanguage)
+                {
+                    NethereumWeb3Version = Constants.NethereumWeb3Version
+                };
 
                 //when
                 //code gen proj file
