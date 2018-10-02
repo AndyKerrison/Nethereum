@@ -110,9 +110,12 @@ namespace Nethereum.Contracts
             return EstimateGasFromEncAsync(CreateCallInput(from, gas, value, functionInput));
         }
 
-        public Task<string> SendTransactionAsync(string from, params object[] functionInput)
+        public Task<string> SendTransactionAsync(string from, bool isWanchain, params object[] functionInput)
         {
-            return base.SendTransactionAsync(CreateTransactionInput(from, functionInput));
+            var input = CreateTransactionInput(from, functionInput);
+            input.IsWanchain = isWanchain;
+
+            return base.SendTransactionAsync(input);
         }
 
         public Task<string> SendTransactionAsync(string from, HexBigInteger gas,

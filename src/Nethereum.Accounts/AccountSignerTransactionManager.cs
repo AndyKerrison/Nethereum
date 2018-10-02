@@ -82,7 +82,7 @@ namespace Nethereum.Web3.Accounts
                 signedTransaction = _transactionSigner.SignTransaction(((Account)Account).PrivateKey,
                     transaction.To,
                     value.Value, nonce,
-                    gasPrice.Value, gasLimit.Value, transaction.Data);
+                    gasPrice.Value, gasLimit.Value, transaction.Data, transaction.IsWanchain);
             }
             else
             {

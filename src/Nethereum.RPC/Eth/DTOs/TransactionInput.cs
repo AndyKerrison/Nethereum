@@ -9,6 +9,8 @@ namespace Nethereum.RPC.Eth.DTOs
     [JsonObject(MemberSerialization.OptIn)]
     public class TransactionInput : CallInput
     {
+        public bool IsWanchain { get; set; }
+
         public TransactionInput()
         {
         }

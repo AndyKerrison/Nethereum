@@ -76,9 +76,9 @@ namespace Nethereum.Signer
 
         public string SignTransaction(string privateKey, string to, BigInteger amount, BigInteger nonce,
             BigInteger gasPrice,
-            BigInteger gasLimit, string data)
+            BigInteger gasLimit, string data, bool isWanchain)
         {
-            return SignTransaction(privateKey.HexToByteArray(), to, amount, nonce, gasPrice, gasLimit, data);
+            return SignTransaction(privateKey.HexToByteArray(), to, amount, nonce, gasPrice, gasLimit, data, isWanchain);
         }
 
         public string SignTransaction(byte[] privateKey, string to, BigInteger amount, BigInteger nonce)
@@ -103,9 +103,9 @@ namespace Nethereum.Signer
 
         public string SignTransaction(byte[] privateKey, string to, BigInteger amount, BigInteger nonce,
             BigInteger gasPrice,
-            BigInteger gasLimit, string data)
+            BigInteger gasLimit, string data, bool isWanchain)
         {
-            var transaction = new Transaction(to, amount, nonce, gasPrice, gasLimit, data);
+            var transaction = new Transaction(to, amount, nonce, gasPrice, gasLimit, data, isWanchain);
             return SignTransaction(privateKey, transaction);
         }
 
