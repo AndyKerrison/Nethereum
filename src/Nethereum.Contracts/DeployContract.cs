@@ -62,11 +62,12 @@ namespace Nethereum.Contracts
             return TransactionManager.EstimateGasAsync(callInput);
         }
 
-        public Task<string> SendRequestAsync(string abi, string contractByteCode, string from, HexBigInteger gas,
+        public Task<string> SendRequestAsync(bool isWanchain, string abi, string contractByteCode, string from, HexBigInteger gas,
             params object[] values)
         {
             var transaction =
                 _deployContractTransactionBuilder.BuildTransaction(abi, contractByteCode, from, gas, values);
+            transaction.IsWanchain = isWanchain;
             return TransactionManager.SendTransactionAsync(transaction);
         }
 
